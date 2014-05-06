@@ -21,14 +21,14 @@ public class PopulateRadio extends HttpServlet {
 		station.setProperty("name", "100 HIT radio");
 		station.setProperty("description", "UK, US and Euro Charts top 100 music, 24/7.");
 		station.setProperty("url", "http://listen.radionomy.com/100-HIT-radio");
-		station.setProperty("url", "http://listen.radionomy.com/100-HIT-radio.m3u");
+		station.setProperty("m3u", "http://listen.radionomy.com/100-HIT-radio.m3u");
 		station.setProperty("tag", 	"Hits TopCharts Pop RnB Dance");
 		datastore.put(station);
 		station = new Entity("Station");
 		station.setProperty("name", "BestRadio");
 		station.setProperty("description", "Le meilleur des hits, 24/7 ! The best hits, 24/7 !");
 		station.setProperty("url", "http://listen.radionomy.com/bestradio");
-		station.setProperty("url", "http://listen.radionomy.com/bestradio.m3u");
+		station.setProperty("m3u", "http://listen.radionomy.com/bestradio.m3u");
 		station.setProperty("tag", 	"Hits HitsUSA Oldies Dance");
 		datastore.put(station);
 		station = new Entity("Station");

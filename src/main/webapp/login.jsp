@@ -28,14 +28,18 @@
 					<li class="divider-vertical"></li>
 					<li><a data-toggle="modal" href="#instructions">Instructions</a></li>
 					<li><a href="https://github.com/Walliee/TweetBuzz" target="_blank">Code</a></li>
-					<li><a href='<%=request.getAttribute("authUrl") %>'>Login</a></li>
+<%-- 					<li><a href='<%=request.getAttribute("authUrl") %>'>Login</a></li> --%>
 				</ul>
 			</div>					
 		</div>
 	</div>
 	<div class="container">
-		<p><%=request.getAttribute("user") %></p>
-		<p><%=request.getAttribute("emotion") %></p>
+		<p><%=request.getSession().getAttribute("user") %></p>
+		<p><%=request.getSession().getAttribute("latestTweet") %></p>
+		<p><%=request.getSession().getAttribute("emotion") %></p>
+		<p><%=request.getSession().getAttribute("stationName") %></p>
+		<p><%=request.getSession().getAttribute("url") %></p>
+<%-- 		<p><%=request.getAttribute("emotion") %></p> --%>
 	</div>
 	<script type="text/javascript" charset="utf8" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="/bootstrap/js/bootstrap.min.js"></script>

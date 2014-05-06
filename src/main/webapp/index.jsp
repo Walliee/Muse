@@ -229,11 +229,23 @@
 										//$('#stations2').append('<div class="row">');	
 									}
 									str = str.concat('<div class="col-lg-6">');
+									str = str.concat('<div class="panel panel-default">');
 									//$('#stations2').append('<div class="col-lg-6">');
 									var station = data[i];
-									var contentString = '<p><b>' + station.propertyMap.name + '</b> : ' + station.propertyMap.description + '</p>';
-									str = str.concat(contentString);
+									str = str.concat('<div class="panel-heading">');
+									str = str.concat('<h3 class="panel-title">' + station.propertyMap.name + '</h3>');
+									str = str.concat('</div>');
+									str = str.concat('<div class="panel-body">');
+									str = str.concat(station.propertyMap.description);
+									str = str.concat('<br><br><button type="button" class="btn btn-default btn-md">');
+									str = str.concat('<span class="glyphicon glyphicon-play"></span> Play');
+									str = str.concat('</button>');
+									str = str.concat('</div>');
+// 									var contentString = '<p><b>' + station.propertyMap.name + '</b> : ' + station.propertyMap.description + '</p>';
+// 									str = str.concat(contentString);
 									//$('#stations2').append(contentString);
+									
+									str = str.concat('</div>');
 									str = str.concat('</div>');
 									//$('#stations2').append('</div>');
 									if(i%2 == 0){

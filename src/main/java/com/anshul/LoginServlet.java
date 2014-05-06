@@ -25,6 +25,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -38,9 +42,15 @@ public class LoginServlet extends HttpServlet {
       throws IOException {
 	try {
 		Twitter twitter = new TwitterFactory().getInstance();
-
+//		Twitter twitter = TwitterFactory.getSingleton();
+		
+		try {
 		twitter.setOAuthConsumer("dyHSJLTZhh2eSSw2RVpqMIKyJ",
 				  "jW22uPPA54DOMNicfFJWzf4jB7nKHbdi7L6VuPFlfWEPAOt5Ai");
+		} catch (IllegalStateException e) {
+			//e.printStackTrace();
+		}
+
 		  
 		  RequestToken requestToken;
 		  requestToken = twitter.getOAuthRequestToken();
@@ -51,6 +61,7 @@ public class LoginServlet extends HttpServlet {
 		  session.setAttribute("token", token);
 		  session.setAttribute("tokenSecret", tokenSecret);
 		  session.setAttribute("twitter", twitter); 
+		  session.setAttribute("temp", 1111111111);
 		  String authUrl = requestToken.getAuthorizationURL();
 		  session.setAttribute("authUrl", authUrl);
 		  req.setAttribute("authUrl", authUrl);

@@ -21,6 +21,7 @@ package com.anshul;
 //import com.google.appengine.api.users.UserServiceFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,41 +29,71 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.Filter;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
 import twitter4j.User;
 import twitter4j.auth.AccessToken;
 
-
 @SuppressWarnings("serial")
 public class HomeServlet extends HttpServlet {
-  @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws IOException, ServletException {
-	  
-	try {
-		Twitter twitter = (Twitter) req.getSession().getAttribute("twitter");
-		AccessToken accessToken;
-		accessToken = twitter.getOAuthAccessToken((String) req.getParameter("oauth_verifier"));
-		twitter.setOAuthAccessToken(accessToken);
-		   
-		User user = twitter.verifyCredentials();
-		
-		String username = user.getName();
-		TweetWrapper tweetWrapper = TweetWrapper.feel(user.getStatus().getText());
-		
-		req.setAttribute("user", username);
-		req.setAttribute("emotion", tweetWrapper.getStrongestEmotion());
-		RequestDispatcher rd = req.getRequestDispatcher("login.jsp");
-		rd.forward(req, resp);
-		
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException, ServletException {
 		resp.setContentType("text/html");
-		resp.getWriter().print(user.getName());
-	} catch (TwitterException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+
+		Twitter twitter = (Twitter) req.getSession().getAttribute("twitter");
+//		Twitter twitter = TwitterFactory.getSingleton();
+
+		resp.getWriter().print(req.getSession().getAttribute("temp"));
+		if (twitter != null) {
+			String oauth_verifier = req.getParameter("oauth_verifier");
+			try {
+				AccessToken accessToken;
+				accessToken = twitter.getOAuthAccessToken(oauth_verifier);
+				twitter.setOAuthAccessToken(accessToken);
+
+				User user = twitter.verifyCredentials();
+				DatastoreService datastore = DatastoreServiceFactory
+						.getDatastoreService();
+
+				String username = user.getName();
+				String latestTweet = user.getStatus().getText();
+				TweetWrapper tweetWrapper = TweetWrapper.feel(latestTweet);
+				String emotion = tweetWrapper.getStrongestEmotion();
+
+				Query query = new Query("Station");
+				query.setFilter(FilterOperator.EQUAL.of("mood", emotion));
+				List<Entity> stations = datastore.prepare(query).asList(
+						FetchOptions.Builder.withLimit(1));
+				Entity station = stations.get(0);
+
+				req.getSession().setAttribute("user", username);
+				req.getSession().setAttribute("latestTweet", latestTweet);
+				req.getSession().setAttribute("emotion", emotion);
+				req.getSession().setAttribute("stationName",
+						station.getProperty("name"));
+				req.getSession()
+						.setAttribute("url", station.getProperty("url"));
+
+				// resp.sendRedirect("login.jsp");
+				RequestDispatcher rd = req.getRequestDispatcher("login.jsp");
+				rd.forward(req, resp);
+
+			} catch (TwitterException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 	}
-	  
-	  
-  }
+
 }
