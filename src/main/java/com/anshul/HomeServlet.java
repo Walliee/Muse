@@ -86,10 +86,11 @@ public class HomeServlet extends HttpServlet {
 						station.getProperty("name"));
 				req.getSession()
 						.setAttribute("url", station.getProperty("url"));
-
-				// resp.sendRedirect("login.jsp");
-				RequestDispatcher rd = req.getRequestDispatcher("login.jsp");
-				rd.forward(req, resp);
+				req.removeAttribute("oauth_token");
+				req.removeAttribute("oauth_verifier");
+				resp.sendRedirect("login.jsp");
+//				RequestDispatcher rd = req.getRequestDispatcher("login.jsp");
+//				rd.forward(req, resp);
 
 			} catch (TwitterException e) {
 				// TODO Auto-generated catch block

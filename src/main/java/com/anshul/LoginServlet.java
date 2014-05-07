@@ -62,10 +62,10 @@ public class LoginServlet extends HttpServlet {
 		  String tokenSecret = requestToken.getTokenSecret(); 
 		  
 		  HttpSession session = req.getSession();
-		  session.setAttribute("token", token);
+//		  session.setAttribute("token", token);
 //		  session.setAttribute("tokenSecret", tokenSecret);
 		  session.setAttribute("twitter", twitter); 
-		  session.setAttribute("temp", 1111111111);
+//		  session.setAttribute("temp", 1111111111);
 		  String authUrl = requestToken.getAuthorizationURL();
 		  session.setAttribute("authUrl", authUrl);
 		  req.setAttribute("authUrl", authUrl);
