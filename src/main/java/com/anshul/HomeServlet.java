@@ -58,48 +58,63 @@ public class HomeServlet extends HttpServlet {
 //		resp.getWriter().print(req.getSession().getAttribute("temp"));
 		if (twitter != null) {
 			String oauth_verifier = req.getParameter("oauth_verifier");
-			try {
-				AccessToken accessToken;
-				accessToken = twitter.getOAuthAccessToken(oauth_verifier);
-				twitter.setOAuthAccessToken(accessToken);
+			if(oauth_verifier != null) {
+				try {
+					AccessToken accessToken;
+					accessToken = twitter.getOAuthAccessToken(oauth_verifier);
+					twitter.setOAuthAccessToken(accessToken);
+					
+					statusCheck(twitter, req, resp);
+					
+//					RequestDispatcher rd = req.getRequestDispatcher("login.jsp");
+//					rd.forward(req, resp);
 
-				User user = twitter.verifyCredentials();
-				
-
-				String username = user.getName();
-				String latestTweet = user.getStatus().getText();
-				TweetWrapper tweetWrapper = TweetWrapper.feel(latestTweet);
-				String emotion = tweetWrapper.getStrongestEmotion();
-
-				DatastoreService datastore = DatastoreServiceFactory
-						.getDatastoreService();
-				Query query = new Query("Station");
-				query.setFilter(FilterOperator.EQUAL.of("mood", emotion));
-				List<Entity> stations = datastore.prepare(query).asList(
-						FetchOptions.Builder.withLimit(1));
-				Entity station = stations.get(0);
-
-				req.getSession().setAttribute("user", username);
-				req.getSession().setAttribute("latestTweet", latestTweet);
-				req.getSession().setAttribute("emotion", emotion);
-				req.getSession().setAttribute("stationName",
-						station.getProperty("name"));
-				req.getSession()
-						.setAttribute("url", station.getProperty("url"));
-				req.getSession()
-				.setAttribute("profileImage", user.getBiggerProfileImageURL());
-				req.removeAttribute("oauth_token");
-				req.removeAttribute("oauth_verifier");
-				resp.sendRedirect("login.jsp");
-//				RequestDispatcher rd = req.getRequestDispatcher("login.jsp");
-//				rd.forward(req, resp);
-
-			} catch (TwitterException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				} catch (TwitterException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+				try {
+					statusCheck(twitter, req, resp);
+				} catch (TwitterException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+			
 
 		}
+	}
+	
+	private void statusCheck(Twitter twitter, HttpServletRequest req, HttpServletResponse resp) throws IOException, TwitterException {
+		User user = twitter.verifyCredentials();
+		
+
+		String username = user.getName();
+		String latestTweet = user.getStatus().getText();
+		TweetWrapper tweetWrapper = TweetWrapper.feel(latestTweet);
+		String emotion = tweetWrapper.getStrongestEmotion();
+
+		DatastoreService datastore = DatastoreServiceFactory
+				.getDatastoreService();
+		Query query = new Query("Station");
+		query.setFilter(FilterOperator.EQUAL.of("mood", emotion));
+		List<Entity> stations = datastore.prepare(query).asList(
+				FetchOptions.Builder.withLimit(1));
+		Entity station = stations.get(0);
+
+		req.getSession().setAttribute("user", username);
+		req.getSession().setAttribute("latestTweet", latestTweet);
+		req.getSession().setAttribute("emotion", emotion);
+		req.getSession().setAttribute("stationName",
+				station.getProperty("name"));
+		req.getSession()
+				.setAttribute("url", station.getProperty("url"));
+		req.getSession()
+		.setAttribute("profileImage", user.getBiggerProfileImageURL());
+		req.removeAttribute("oauth_token");
+		req.removeAttribute("oauth_verifier");
+		resp.sendRedirect("login.jsp");
 	}
 
 }

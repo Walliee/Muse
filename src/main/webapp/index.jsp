@@ -278,6 +278,8 @@
 												pause : function() {
 													$(this).jPlayer(
 															"clearMedia");
+													$(".btn-success").html("<span class=\"glyphicon glyphicon-play\"></span> Play");
+													$(".btn-success").removeClass("btn-success").addClass("btn-default");
 												},
 												error : function(event) {
 													if (ready1

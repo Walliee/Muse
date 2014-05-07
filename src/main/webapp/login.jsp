@@ -35,7 +35,7 @@
 				<li><a href="#services">Services</a></li>
 				<li><a href="#stations">Stations</a></li>
 				<li><a href="#github">Code</a></li>
-				<li><a href='<%=request.getAttribute("authUrl")%>'>MyMuse</a></li>
+				<li><a href='/home'>MyMuse</a></li>
 				<li><br></li>
 			</ul>
 		</div>
@@ -284,6 +284,8 @@
 												pause : function() {
 													$(this).jPlayer(
 															"clearMedia");
+													$(".btn-success").html("<span class=\"glyphicon glyphicon-play\"></span> Play");
+													$(".btn-success").removeClass("btn-success").addClass("btn-default");
 												},
 												error : function(event) {
 													if (ready1
