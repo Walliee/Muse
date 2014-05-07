@@ -28,6 +28,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -48,12 +49,13 @@ public class HomeServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
-		resp.setContentType("text/html");
+//		resp.setContentType("text/html");
 
 		Twitter twitter = (Twitter) req.getSession().getAttribute("twitter");
+		
 //		Twitter twitter = TwitterFactory.getSingleton();
 
-		resp.getWriter().print(req.getSession().getAttribute("temp"));
+//		resp.getWriter().print(req.getSession().getAttribute("temp"));
 		if (twitter != null) {
 			String oauth_verifier = req.getParameter("oauth_verifier");
 			try {
@@ -62,14 +64,15 @@ public class HomeServlet extends HttpServlet {
 				twitter.setOAuthAccessToken(accessToken);
 
 				User user = twitter.verifyCredentials();
-				DatastoreService datastore = DatastoreServiceFactory
-						.getDatastoreService();
+				
 
 				String username = user.getName();
 				String latestTweet = user.getStatus().getText();
 				TweetWrapper tweetWrapper = TweetWrapper.feel(latestTweet);
 				String emotion = tweetWrapper.getStrongestEmotion();
 
+				DatastoreService datastore = DatastoreServiceFactory
+						.getDatastoreService();
 				Query query = new Query("Station");
 				query.setFilter(FilterOperator.EQUAL.of("mood", emotion));
 				List<Entity> stations = datastore.prepare(query).asList(

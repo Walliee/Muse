@@ -50,16 +50,20 @@ public class LoginServlet extends HttpServlet {
 		} catch (IllegalStateException e) {
 			//e.printStackTrace();
 		}
-
+		
+		
+		StringBuffer callbackURL = req.getRequestURL();
+        int index = callbackURL.lastIndexOf("/");
+        callbackURL.replace(index, callbackURL.length(), "").append("/home");
 		  
 		  RequestToken requestToken;
-		  requestToken = twitter.getOAuthRequestToken();
+		  requestToken = twitter.getOAuthRequestToken(callbackURL.toString());
 		  String token = requestToken.getToken();
 		  String tokenSecret = requestToken.getTokenSecret(); 
 		  
 		  HttpSession session = req.getSession();
 		  session.setAttribute("token", token);
-		  session.setAttribute("tokenSecret", tokenSecret);
+//		  session.setAttribute("tokenSecret", tokenSecret);
 		  session.setAttribute("twitter", twitter); 
 		  session.setAttribute("temp", 1111111111);
 		  String authUrl = requestToken.getAuthorizationURL();
