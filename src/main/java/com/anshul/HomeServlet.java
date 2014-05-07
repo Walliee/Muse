@@ -86,6 +86,8 @@ public class HomeServlet extends HttpServlet {
 						station.getProperty("name"));
 				req.getSession()
 						.setAttribute("url", station.getProperty("url"));
+				req.getSession()
+				.setAttribute("profileImage", user.getBiggerProfileImageURL());
 				req.removeAttribute("oauth_token");
 				req.removeAttribute("oauth_verifier");
 				resp.sendRedirect("login.jsp");

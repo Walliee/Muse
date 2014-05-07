@@ -34,6 +34,7 @@
 				<li><a href="#about">About</a></li>
 				<li><a href="#services">Services</a></li>
 				<li><a href="#stations">Stations</a></li>
+				<li><a href="#github">Code</a></li>
 				<li><a href='<%=request.getAttribute("authUrl")%>'>MyMuse</a></li>
 				<li><br></li>
 			</ul>
@@ -71,8 +72,9 @@
 						</div>
 					</div>
 		</div>
-		<div style="padding-left:10px; padding-top:10px;">
-			<p style="color:white">Hi <%=request.getSession().getAttribute("user") %><br>Your latest tweet is <br><i>"<%=request.getSession().getAttribute("latestTweet") %>"</i><br>
+		<div style="padding-left:10px; padding-top:10px;" class="text-center">
+			<img src="<%=request.getSession().getAttribute("profileImage") %>" width="75">
+			<p style="color:white">Hi <%=request.getSession().getAttribute("user") %>,<br>Your latest tweet is <br><i>"<%=request.getSession().getAttribute("latestTweet") %>"</i><br>
 			Our best guess is that it has a strong <%=request.getSession().getAttribute("emotion") %> emotion.<p>
 			<p style="color:white">Starting <%=request.getSession().getAttribute("stationName") %> radio station to match your emotion.<p>
 		</div>
@@ -178,17 +180,16 @@
 	<!-- /Portfolio -->
 
 	<!-- Call to Action -->
-<!-- 	<div class="call-to-action"> -->
-<!-- 		<div class="container"> -->
-<!-- 			<div class="row"> -->
-<!-- 				<div class="col-md-6 col-md-offset-3 text-center"> -->
-<!-- 					<h3>The buttons below are impossible to resist.</h3> -->
-<!-- 					<a href="#" class="btn btn-lg btn-default">Click Me!</a> <a -->
-<!-- 						href="#" class="btn btn-lg btn-primary">Look at Me!</a> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
+	<div class="call-to-action" id="github">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3 text-center">
+					<h3>The code to this web app can be found at</h3>
+					<a href="https://github.com/Walliee/Muse" target="_blank" class="btn btn-lg btn-primary"><i class="fa fa-github"></i> GitHub</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- /Call to Action -->
 
 
@@ -244,7 +245,9 @@
 									str = str.concat('</div>');
 									str = str.concat('<div class="panel-body">');
 									str = str.concat(station.propertyMap.description);
-									str = str.concat('<br><br><button type="button" class="btn btn-default btn-md">');
+									str = str.concat('<br><br><button type="button" class="btn btn-default btn-md playStation" value="');
+									str = str.concat(station.propertyMap.url);
+									str = str.concat('">');
 									str = str.concat('<span class="glyphicon glyphicon-play"></span> Play');
 									str = str.concat('</button>');
 									str = str.concat('</div>');
@@ -299,7 +302,17 @@
 												wmode : "window",
 												keyEnabled : true
 											});
-							
+							$(document).on('click', '.playStation', function(e) {
+								var station = $(this).closest('.panel').children('.panel-heading').text();
+								var url = $(this).attr("value");
+								var stream = {
+										title : station,
+										mp3 : url
+									}, ready1 = false;
+								$("#jquery_jplayer_1")
+								.jPlayer("setMedia", stream).jPlayer("play");
+								
+							});
 							
 						});
 		//]]>
