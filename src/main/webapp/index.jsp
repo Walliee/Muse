@@ -240,6 +240,14 @@
 									str = str.concat('</div>');
 									str = str.concat('<div class="panel-body">');
 									str = str.concat(station.propertyMap.description);
+									str = str.concat('<br><br>');
+									var tagsString = station.propertyMap.tag;
+									var tags = tagsString.split(" ");
+									for (var j=0; j<tags.length; j++) {
+										str = str.concat('<span class="badge">');
+	 									str = str.concat(tags[j]);
+	 									str = str.concat('</span> ');
+									}
 									str = str.concat('<br><br><button type="button" class="btn btn-default btn-md playStation" value="');
 									str = str.concat(station.propertyMap.url);
 									str = str.concat('">');

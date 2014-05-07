@@ -16,6 +16,7 @@
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
 <link type="text/css" href="/skin/jplayer.blue.monday.css"
 	rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="css/jquery.gritter.css" />
 </head>
 
 <body>
@@ -74,9 +75,12 @@
 		</div>
 		<div style="padding-left:10px; padding-top:10px;" class="text-center">
 			<img src="<%=request.getSession().getAttribute("profileImage") %>" width="75">
-			<p style="color:white">Hi <%=request.getSession().getAttribute("user") %>,<br>Your latest tweet is <br><i>"<%=request.getSession().getAttribute("latestTweet") %>"</i><br>
+			<p style="color:white">Hi <%=request.getSession().getAttribute("user") %>,</p>
+			<div id="status">
+			<p style="color:white">Your latest tweet is <br><i>"<%=request.getSession().getAttribute("latestTweet") %>"</i><br>
 			Our best guess is that it has a strong <%=request.getSession().getAttribute("emotion") %> emotion.<p>
-			<p style="color:white">Starting <%=request.getSession().getAttribute("stationName") %> radio station to match your emotion.<p>
+			<p style="color:white">Starting <%=request.getSession().getAttribute("stationName") %> radio station to match your emotion.</p>
+			</div>
 		</div>
 	</div>
 	<!-- /Side Menu -->
@@ -219,6 +223,7 @@
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="/js/jquery.jplayer.min.js"></script>
+	<script type="text/javascript" src="js/jquery.gritter.min.js"></script>
 
 	<script type="text/javascript">
 		//<![CDATA[
@@ -245,6 +250,16 @@
 									str = str.concat('</div>');
 									str = str.concat('<div class="panel-body">');
 									str = str.concat(station.propertyMap.description);
+									str = str.concat('<br><br>');
+									var tagsString = station.propertyMap.tag;
+									var tags = tagsString.split(" ");
+									for (var j=0; j<tags.length; j++) {
+										str = str.concat('<span class="badge">');
+	 									str = str.concat(tags[j]);
+	 									str = str.concat('</span> ');
+									}
+// 									str = str.concat('<span class="badge pull-right">');
+// 									str - str.concat(station.propertyMap));42</span>')
 									str = str.concat('<br><br><button type="button" class="btn btn-default btn-md playStation" value="');
 									str = str.concat(station.propertyMap.url);
 									str = str.concat('">');
@@ -317,6 +332,7 @@
 								$(".btn-success").removeClass("btn-success").addClass("btn-default");
 								$(this).removeClass("btn-default").addClass("btn-success");
 								$(this).html("<span class=\"glyphicon glyphicon-play\"></span> Playing");
+								$("#status").hide();
 								$.gritter.add({
 									// (string | mandatory) the heading of the notification
 									title: 'Station Changed',
