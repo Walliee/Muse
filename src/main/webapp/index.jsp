@@ -16,6 +16,7 @@
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
 <link type="text/css" href="/skin/jplayer.blue.monday.css"
 	rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="css/jquery.gritter.css" />
 </head>
 
 <body>
@@ -211,6 +212,7 @@
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<script type="text/javascript" src="/js/jquery.jplayer.min.js"></script>
+	<script type="text/javascript" src="js/jquery.gritter.min.js"></script>
 
 	<script type="text/javascript">
 		//<![CDATA[
@@ -304,7 +306,25 @@
 									}, ready1 = false;
 								$("#jquery_jplayer_1")
 								.jPlayer("setMedia", stream).jPlayer("play");
-								
+								$(".btn-success").html("<span class=\"glyphicon glyphicon-play\"></span> Play");
+								$(".btn-success").removeClass("btn-success").addClass("btn-default");
+								$(this).removeClass("btn-default").addClass("btn-success");
+								$(this).html("<span class=\"glyphicon glyphicon-play\"></span> Playing");
+								$.gritter.add({
+									// (string | mandatory) the heading of the notification
+									title: 'Station Changed',
+									// (string | mandatory) the text inside the notification
+									text: 'Now Playing ' + station ,
+									// (bool | optional) if you want it to fade out on its own or just sit there
+									sticky: false, 
+									// (int | optional) the time you want it to be alive for before fading out (milliseconds)
+									time: 4000,
+									// (string | optional) the class name you want to apply directly to the notification for custom styling
+									class_name: 'my-class',
+								        // (function | optional) function called before it opens
+									position: 'top-left',
+									
+								});
 							});
 						});
 		//]]>
