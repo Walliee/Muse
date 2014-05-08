@@ -248,7 +248,9 @@
 									str = str.concat('<div class="panel-heading">');
 									str = str.concat('<h3 class="panel-title">' + station.propertyMap.name + '</h3>');
 									str = str.concat('</div>');
-									str = str.concat('<div class="panel-body">');
+									str = str.concat('<div class="panel-body"><img src=');
+									str = str.concat(station.propertyMap.img);
+									str = str.concat('><br>');
 									str = str.concat(station.propertyMap.description);
 									str = str.concat('<br><br>');
 									var tagsString = station.propertyMap.tag;
