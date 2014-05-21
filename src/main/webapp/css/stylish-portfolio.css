@@ -109,6 +109,7 @@ body {
 /* Full Page Image Header Area */
 
 .header {
+  padding: 50px 0;
   display: table;
   height: 100%;
   width: 100%;

@@ -42,19 +42,30 @@ public class UploadServlet extends HttpServlet {
         try {
             Map<String, List<BlobKey>> files_sent = BlobstoreServiceFactory.getBlobstoreService().getUploads(req);
             List<BlobKey> file_keys = files_sent.get(req.getSession().getAttribute("userId").toString());
+            
             Map<String, List<FileInfo>> fileInfo = BlobstoreServiceFactory.getBlobstoreService().getFileInfos(req);
             String filename= fileInfo.get(req.getSession().getAttribute("userId").toString()).get(0).getFilename();
-            System.out.println();
+            String blobkey=files_sent.get(req.getSession().getAttribute("userId").toString()).get(0).getKeyString();
+            
             Entity file = new Entity("Uploads");
 		    file.setProperty("userId", req.getSession().getAttribute("userId").toString());
-		    file.setProperty("blobKey", files_sent.get(req.getSession().getAttribute("userId").toString()).get(0).getKeyString());
+		    file.setProperty("blobKey", blobkey);
 		    file.setProperty("filename", filename);
-		    
 		    
 		    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 		    datastore.put(file);
+		    
+		    resp.sendRedirect("/music.jsp");
+		    
+//		    req.getSession().setAttribute("addedsong", "{ title:\"" + filename +"\", mp3: \"/serve?blob-key=" + blobkey + "\"}");
+		    
+		   // resp.setContentType("text/html");
+		   // resp.setCharacterEncoding("UTF-8");
+		   // resp.getWriter().write("{ title:\"" + filename +"\", mp3: \"/serve?blob-key=" + blobkey + "\"}");
+			
 //            req.getSession().setAttribute("playlist", file_keys);
-            resp.sendRedirect("/music.jsp");
+		    //resp.getWriter().write(blobkey);
+            
 //            resp.sendRedirect("/upload?blob_key=" + file_keys.get(0).getKeyString());
 //            System.out.println("Document successfully POSTED, redirect to doGET");
         }
