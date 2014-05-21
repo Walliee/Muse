@@ -24,6 +24,8 @@
 		<script type="text/javascript" src="/js/jquery.jplayer.js"></script>
 		<script type="text/javascript" src="/js/jplayer.playlist.js"></script>
 		<script src="js/bootstrap.js" type="text/javascript"></script>
+		<link rel="stylesheet" type="text/css" href="css/jquery.gritter.css" />
+		<script type="text/javascript" src="js/jquery.gritter.min.js"></script>
 
 </head>
 <body>
@@ -31,8 +33,10 @@
 	<body>
 	
    <form enctype="multipart/form-data" method="post" action="<%= BlobstoreServiceFactory.getBlobstoreService().createUploadUrl("/upload", UploadOptions.Builder.withGoogleStorageBucketName("muse")) %>">
-		<input type="file" name="<%=request.getSession().getAttribute("userId") %>" size="30" />
-		<input type="submit" />
+   <div class="form-group">
+		<input class="btn btn-default" type="file" name="<%=request.getSession().getAttribute("userId") %>" size="30" />
+		<input class="btn btn-primary" type="submit" />
+	</div>
 	</form>
 	
 	
@@ -113,32 +117,11 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
-		var nowPlaying;
-		jQuery("#jquery_jplayer_1").bind(jQuery.jPlayer.event.play, function (event)
-			    {   
-
-			        var current         = myPlaylist.current,
-			        playlist        = myPlaylist.playlist;
-			        jQuery.each(playlist, function (index, obj){
-			            if (index == current){
-			                    nowPlaying = obj.title;
-			                    $("#tweettext").val('');
-			                    $("#tweettext").val('Now Playing ' + nowPlaying + ' #Muse #NowPlaying');
-
-			            } // if condition end
-			        });
-			    });
 		
-		$('#openBtn').click(function(){
-			$('#myModal').modal({show:true})
-		});
-		</script>
-
 		    
 <a data-toggle="modal" href="#myModal" class="btn btn-primary">Launch modal</a>
 
-<div class="modal" id="myModal">
+<div class="modal fade" id="myModal">
 	<div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -163,5 +146,62 @@
       </div>
     </div>
 </div>
+
+<script type="text/javascript">
+		var nowPlaying;
+		jQuery("#jquery_jplayer_1").bind(jQuery.jPlayer.event.play, function (event)
+			    {   
+
+			        var current         = myPlaylist.current,
+			        playlist        = myPlaylist.playlist;
+			        jQuery.each(playlist, function (index, obj){
+			            if (index == current){
+			                    nowPlaying = obj.title;
+			                    $("#tweettext").val('');
+			                    $("#tweettext").val('Now Playing ' + nowPlaying + ' #Muse #NowPlaying');
+			                    $.gritter
+								.add({
+									title : 'Now Playing',
+									text : nowPlaying,
+									sticky : false,
+									time : 4000,
+									class_name : 'my-class',
+									position : 'top-left'
+
+								});
+
+			            } // if condition end
+			        });
+			    });
+		
+		$("#tweet").click(function(){
+			var tweettext2 = $("#tweettext").val();
+			
+			$.ajax({
+				  type: "POST",
+				  url: "/tweet",
+				  data: { tweet: tweettext2},
+				  beforeSend: function(){
+					  $('#myModal').modal('hide');
+					   },
+				success: function() {
+					$.gritter
+					.add({
+						title : 'Tweet posted',
+						text : tweettext2,
+						sticky : false,
+						time : 4000,
+						class_name : 'my-class',
+						position : 'top-left'
+
+					});
+				  }
+				});
+					
+				  
+		});
+
+		</script>
+
 </body>
 </html>

@@ -9,8 +9,8 @@
         <servlet-class>com.anshul.LoginServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>signinfb</servlet-name>
-        <servlet-class>com.anshul.SignInFB</servlet-class>
+        <servlet-name>tweet</servlet-name>
+        <servlet-class>com.anshul.Tweet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>serve</servlet-name>
@@ -41,12 +41,12 @@
         <url-pattern>/serve</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>uploadServlet</servlet-name>
-        <url-pattern>/upload</url-pattern>
+        <servlet-name>tweet</servlet-name>
+        <url-pattern>/tweet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>signinfb</servlet-name>
-        <url-pattern>/signinfb</url-pattern>
+        <servlet-name>uploadServlet</servlet-name>
+        <url-pattern>/upload</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>list</servlet-name>
