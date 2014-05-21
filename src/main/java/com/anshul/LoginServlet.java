@@ -42,13 +42,12 @@ public class LoginServlet extends HttpServlet {
       throws IOException {
 	try {
 		Twitter twitter = new TwitterFactory().getInstance();
-//		Twitter twitter = TwitterFactory.getSingleton();
 		
 		try {
 		twitter.setOAuthConsumer("dyHSJLTZhh2eSSw2RVpqMIKyJ",
 				  "jW22uPPA54DOMNicfFJWzf4jB7nKHbdi7L6VuPFlfWEPAOt5Ai");
 		} catch (IllegalStateException e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		
 		
@@ -62,10 +61,7 @@ public class LoginServlet extends HttpServlet {
 		  String tokenSecret = requestToken.getTokenSecret(); 
 		  
 		  HttpSession session = req.getSession();
-//		  session.setAttribute("token", token);
-//		  session.setAttribute("tokenSecret", tokenSecret);
-		  session.setAttribute("twitter", twitter); 
-//		  session.setAttribute("temp", 1111111111);
+		  session.setAttribute("twitter", twitter);
 		  String authUrl = requestToken.getAuthorizationURL();
 		  session.setAttribute("authUrl", authUrl);
 		  req.setAttribute("authUrl", authUrl);

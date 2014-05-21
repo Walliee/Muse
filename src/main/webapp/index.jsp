@@ -220,10 +220,7 @@
 
 						function() {
 
-							$
-									.getJSON(
-											'/list',
-											function(data) {
+							$.getJSON('/list', function(data) {
 												for (var i = 0; i < data.length; i++) {
 													var str = "";
 													if (i % 2 == 0) {

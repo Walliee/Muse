@@ -37,10 +37,11 @@
 				<li><a href="#stations">Stations</a></li>
 				<li><a href="#github">Code</a></li>
 				<li><a href='/home'>MyMuse</a></li>
+				<li><a href='/music.jsp'>Music</a></li>
 				<li><br></li>
 			</ul>
 		</div>
-		<div style="padding-left: 30px; padding-top: 300px;">
+		<div style="padding-left: 30px; padding-top: 350px;">
 			<div id="jquery_jplayer_1" class="jp-jplayer"></div>
 
 			<div id="jp_container_1" class="jp-audio-stream">

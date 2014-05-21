@@ -49,13 +49,9 @@ public class HomeServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
-//		resp.setContentType("text/html");
 
 		Twitter twitter = (Twitter) req.getSession().getAttribute("twitter");
 		
-//		Twitter twitter = TwitterFactory.getSingleton();
-
-//		resp.getWriter().print(req.getSession().getAttribute("temp"));
 		if (twitter != null) {
 			String oauth_verifier = req.getParameter("oauth_verifier");
 			if(oauth_verifier != null) {
@@ -65,9 +61,6 @@ public class HomeServlet extends HttpServlet {
 					twitter.setOAuthAccessToken(accessToken);
 					
 					statusCheck(twitter, req, resp);
-					
-//					RequestDispatcher rd = req.getRequestDispatcher("login.jsp");
-//					rd.forward(req, resp);
 
 				} catch (TwitterException e) {
 					// TODO Auto-generated catch block
@@ -89,7 +82,7 @@ public class HomeServlet extends HttpServlet {
 	private void statusCheck(Twitter twitter, HttpServletRequest req, HttpServletResponse resp) throws IOException, TwitterException {
 		User user = twitter.verifyCredentials();
 		
-
+		
 		String username = user.getName();
 		String latestTweet = user.getStatus().getText();
 		TweetWrapper tweetWrapper = TweetWrapper.feel(latestTweet);
@@ -104,6 +97,7 @@ public class HomeServlet extends HttpServlet {
 		Entity station = stations.get(0);
 
 		req.getSession().setAttribute("user", username);
+		req.getSession().setAttribute("userId", user.getId());
 		req.getSession().setAttribute("latestTweet", latestTweet);
 		req.getSession().setAttribute("emotion", emotion);
 		req.getSession().setAttribute("stationName",

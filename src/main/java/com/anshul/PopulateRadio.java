@@ -88,7 +88,6 @@ public class PopulateRadio extends HttpServlet {
 		station.setProperty("m3u", "http://listen.radionomy.com/ambient-and-lounge.m3u");
 		station.setProperty("tag", 	"House Dance");
 		station.setProperty("mood", "fear");
-		station.setProperty("mood", "neutral");
 		datastore.put(station);
 		station = new Entity("Station");
 		station.setProperty("name", "Ibiza Party Radio");
