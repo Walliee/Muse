@@ -63,7 +63,7 @@ public class LoginServlet extends HttpServlet {
 		  HttpSession session = req.getSession();
 		  session.setAttribute("twitter", twitter);
 		  String authUrl = requestToken.getAuthorizationURL();
-		  session.setAttribute("authUrl", authUrl);
+//		  session.setAttribute("authUrl", authUrl);
 		  req.setAttribute("authUrl", authUrl);
 		  RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
 		  rd.forward(req, resp);

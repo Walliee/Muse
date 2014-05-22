@@ -143,6 +143,7 @@ public class PopulateRadio extends HttpServlet {
 		station.setProperty("tag", 	"Lounge Ambient Chill-out Downtempo");
 		station.setProperty("mood", "anger");
 		datastore.put(station);
+		station = new Entity("Station");
 		station.setProperty("name", "ANGERADIO");
 		station.setProperty("description", "RADIO ALL TUBES");
 		station.setProperty("url", "http://listen.radionomy.com/angeradio");
@@ -151,6 +152,7 @@ public class PopulateRadio extends HttpServlet {
 		station.setProperty("tag", 	"Blues Country ClassicRock Folk Folkloric");
 		station.setProperty("mood", "anger");
 		datastore.put(station);
+		station = new Entity("Station");
 		station.setProperty("name", "Thrash Zone Radio");
 		station.setProperty("description", "Thrash Zone Radio, the only radio station dedicated to Metal faster and brutal styles, Thrash! Kreator, Sodom, Exodus, Overkill .. Here, no mainstream shit! From classics to new releases, through the beads a little less known is that your neck will morfler!");
 		station.setProperty("url", "http://listen.radionomy.com/thrash-zone-radio");
@@ -159,6 +161,7 @@ public class PopulateRadio extends HttpServlet {
 		station.setProperty("tag", 	"DeathMetal HeavyMetal Metal TrashMetal");
 		station.setProperty("mood", "disgust");
 		datastore.put(station);
+		station = new Entity("Station");
 		station.setProperty("name", "100 CHILL");
 		station.setProperty("description", "100% Lounge and Chill-out music.");
 		station.setProperty("url", "http://listen.radionomy.com/100-chill");
@@ -167,6 +170,7 @@ public class PopulateRadio extends HttpServlet {
 		station.setProperty("tag", 	"Chill-out EasyListening Lounge Jazz Ambient");
 		station.setProperty("mood", "sadness");
 		datastore.put(station);
+		station = new Entity("Station");
 		station.setProperty("name", "SMOOTH RIVIERA");
 		station.setProperty("description", "Meditation, Relaxation, Zen... Smooth Riviera is a music program for live peacefully");
 		station.setProperty("url", "http://listen.radionomy.com/smooth-riviera");
@@ -175,6 +179,7 @@ public class PopulateRadio extends HttpServlet {
 		station.setProperty("tag", 	"Chill-out EasyListening Classic Ambient");
 		station.setProperty("mood", "anger");
 		datastore.put(station);
+		station = new Entity("Station");
 		station.setProperty("name", "Bob Marley");
 		station.setProperty("description", "Broadcast 24h/24 and 7/7, the radio offers more than 200 titles at present consist of original songs by Bob Marley but also Bob Family, remix, rework and on the blog full of information about the Lions.");
 		station.setProperty("url", "http://listen.radionomy.com/bob-marley");

@@ -13,6 +13,13 @@
 <%@ page import="com.google.appengine.api.blobstore.UploadOptions" %>
 <html>
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Muse - The Radio App</title>
+
 <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.css" rel="stylesheet">
 <link type="text/css" href="/skin/jplayer.blue.monday.css" rel="stylesheet" />
@@ -48,10 +55,10 @@
 					class="fa fa-times"></i></a>
 				<li class="sidebar-brand"><a href="#">Muse</a></li>
 				<li><a href="#top">Home</a></li>
-				<li><a href="#about">About</a></li>
-				<li><a href="#services">Services</a></li>
-				<li><a href="#stations">Stations</a></li>
-				<li><a href="#github">Code</a></li>
+				<li><a href="/home#about">About</a></li>
+				<li><a href="/home#services">Services</a></li>
+				<li><a href="/home#stations">Stations</a></li>
+				<li><a href="/home#github">Code</a></li>
 				<li><a href='/home'>MyMuse</a></li>
 <!-- 				<li><a href='/music.jsp'>Music</a></li> -->
 				<li><br></li>
@@ -155,7 +162,7 @@
 	<% out.println("<div class=\"col-lg-4\">"); %>
 	<% out.println("<div class=\"panel panel-default\" data-id=" + i + ">"); %>
 	<% out.println("<div class=\"panel-heading\">"); %>
-	<% out.println("<h3 class=\"panel-title\">" + greeting.getProperty("filename").toString() + "</h3></div></div></div>" );%>	
+	<% out.println("<h3 class=\"panel-title\"><i class=\"fa fa-music\"></i>  " + greeting.getProperty("filename").toString() + "</h3></div></div></div>" );%>	
 	<%if (i % 3 == 2) {
 		out.println("</div>");
 		} %> 
@@ -235,6 +242,10 @@
 			});
 		});
 
+		jQuery("#jquery_jplayer_1").bind(jQuery.jPlayer.event.pause, function (event) {
+			$(".panel-success").removeClass("panel-success").addClass("panel-default");
+		});
+		
 		var nowPlaying;
 		jQuery("#jquery_jplayer_1").bind(jQuery.jPlayer.event.play, function (event)
 			 	   {   
@@ -262,6 +273,8 @@
 		
 		$(".panel").click(function() {
 			var id = this.getAttribute('data-id');
+			$(".panel-success").removeClass("panel-success").addClass("panel-default");
+			$(this).removeClass("panel-default").addClass("panel-success");
 			myPlaylist.play(id);
 		});
 		
