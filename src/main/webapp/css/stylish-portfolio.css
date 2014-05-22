@@ -92,6 +92,13 @@ body {
   z-index: 1;
 }
 
+#tweet-toggle {
+  top: 100;
+  right: 10;
+  position: fixed;
+  z-index: 1;
+}
+
 #sidebar-wrapper.active {
   left: 250px;
   width: 250px;

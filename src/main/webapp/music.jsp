@@ -128,6 +128,7 @@
 					</div>
 				</div>
 			</div>
+			<br/>
 			<div class="col-xs-4 col-xs-offset-4">
 				<form id="uplodform" class="form-inline" enctype="multipart/form-data" method="post" action="<%= BlobstoreServiceFactory.getBlobstoreService().createUploadUrl("/upload", UploadOptions.Builder.withGoogleStorageBucketName("muse")) %>">
 					<div class="form-group">
@@ -141,7 +142,7 @@
 				</form>
 			</div>
 			<div class="col-xs-4 col-xs-offset-4">
-				<a data-toggle="modal" href="#myModal" class="btn btn-primary"><i class="fa fa-twitter"></i> Share</a>
+				<a id="tweet-toggle" data-toggle="modal" href="#myModal" class="btn btn-primary toggle"><i class="fa fa-twitter"></i> Share</a>
 			</div>
 		</div>
 		
